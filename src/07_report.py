@@ -431,6 +431,24 @@ def main():
              "packaged the in-house method into a reusable `omicsfs` library, and prepared the clean, "
              "data-safe GitHub repository.")
 
+    # ---- researcher's thoughts & feedback ----
+    L.append("\n## Thoughts & feedback on building with Claude Science\n")
+    L.append("Claude Science saves a significant amount of time when retrieving datasets from "
+             "databases and publications, as well as installing a wide range of software, including "
+             "many bioinformatics tools. It also enables rapid testing of research ideas, allowing me "
+             "to generate draft analyses and preliminary results much faster than before. In many "
+             "cases, it goes beyond simply following instructions by extending my ideas, providing "
+             "constructive comments, and suggesting alternative approaches.\n")
+    L.append("However, I have found that effective use of Claude still requires well-crafted prompts, "
+             "carefully formulated questions, and thorough manual review of its outputs. Although it "
+             "greatly accelerates individual tasks, over the course of a longer project (e.g., a week "
+             "of research), the overall productivity gain is smaller than I initially expected.\n")
+    L.append("Overall, Claude Science improves research efficiency by automating many time-consuming "
+             "tasks and accelerating exploration. However, the quality of the final research output "
+             "is still largely determined by the researcher's domain expertise, critical evaluation, "
+             "and ability to develop innovative ideas. AI is a powerful assistant, but it does not "
+             "replace scientific judgment or creativity.\n")
+
     open(os.path.join(C.ROOT, "results", "REPORT.md"), "w").write("\n".join(L))
     print("[done] wrote results/REPORT.md with embedded figures + tables")
 
