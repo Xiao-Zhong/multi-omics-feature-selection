@@ -8,7 +8,7 @@ Reliability-first feature selection trained on **MESOMICS multi-omics** (express
 
 ## Background & motivation
 
-Malignant pleural mesothelioma is an aggressive, asbestos-linked cancer of the pleura with poor prognosis and few effective therapies. Hundreds of public datasets now profile it across modalities — gene expression, somatic mutation, copy-number variation, methylation and more — yet this information is scattered and rarely integrated. The goal of this project is to use **Claude to automate retrieval and integration of public multi-omics datasets** (genomics, transcriptomics, epigenetics), then **systematically identify survival-associated features that are reproducible across cohorts, biologically meaningful, and have potential for clinical translation** — such as cancer-vaccine target discovery.
+Malignant pleural mesothelioma is an aggressive, asbestos-linked cancer of the pleura with poor prognosis and few effective therapies. Mesothelioma is particularly important to study in Australia, which has one of the highest incidences of the disease in the world, driven by its historical use of asbestos. Hundreds of public datasets now profile it across modalities — gene expression, somatic mutation, copy-number variation, methylation and more — yet this information is scattered and rarely integrated. The goal of this project is to use **Claude to automate retrieval and integration of public multi-omics datasets** (genomics, transcriptomics, epigenetics), then **systematically identify survival-associated features that are reproducible across cohorts, biologically meaningful, and have potential for clinical translation** — such as cancer-vaccine target discovery.
 
 ## Project description
 

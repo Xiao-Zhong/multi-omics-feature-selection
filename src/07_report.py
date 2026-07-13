@@ -195,7 +195,9 @@ def main():
     # ---- background & motivation ----
     L.append("## Background & motivation\n")
     L.append("Malignant pleural mesothelioma is an aggressive, asbestos-linked cancer of the pleura "
-             "with poor prognosis and few effective therapies. Hundreds of public datasets now "
+             "with poor prognosis and few effective therapies. Mesothelioma is particularly important "
+             "to study in Australia, which has one of the highest incidences of the disease in the "
+             "world, driven by its historical use of asbestos. Hundreds of public datasets now "
              "profile it across modalities — gene expression, somatic mutation, copy-number "
              "variation, methylation and more — yet this information is scattered and rarely "
              "integrated. The goal of this project is to use **Claude to automate retrieval and "
