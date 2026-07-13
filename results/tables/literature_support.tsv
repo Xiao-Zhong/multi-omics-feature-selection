@@ -1,0 +1,45 @@
+gene	n_panels	literature_support	role	evidence	refs
+PPP1R18	7	novel/uncurated			
+B3GALT4	7	novel/uncurated			
+COL7A1	6	pan-cancer	Type VII collagen; basement-membrane / ECM	Prognostic in clear-cell RCC, gastric and lung adenocarcinoma (high expression = worse outcome). Not MPM-specific.	https://pmc.ncbi.nlm.nih.gov/articles/PMC8426344/; https://pmc.ncbi.nlm.nih.gov/articles/PMC11868062/
+UBE2C	6	novel/uncurated			
+CALY	6	novel/uncurated			
+CAPN2	5	novel/uncurated			
+SLC22A5	4	novel/uncurated			
+LRIG1	4	novel/uncurated			
+LVRN	4	novel/uncurated			
+LRRN3	4	novel/uncurated			
+DKK2	4	novel/uncurated			
+DSCAML1	4	novel/uncurated			
+CPXM2	2	novel/uncurated			
+CHL1	2	novel/uncurated			
+ACTL10	2	novel/uncurated			
+AL160171.1	2	novel/uncurated			
+CDC20	1	MPM-specific	APC/C co-activator; mitotic/cell-cycle (G2M, E2F target)	Pan-cancer poor-prognosis proliferation marker (meta-analysis); part of an MPM fibroblast-differentiation survival signature.	https://www.frontiersin.org/articles/10.3389/fonc.2022.1017864/full; https://link.springer.com/article/10.1186/s13578-023-01180-7
+MELTF	1	novel/uncurated			
+BCAR3	1	novel/uncurated			
+ASAP2	1	novel/uncurated			
+MYBL2	1	MPM-specific	B-Myb proliferation transcription factor (cell cycle)	Prognostic proliferation TF; interacts with CDC20; in an MPM fibroblast-differentiation survival-prediction network.	https://link.springer.com/article/10.1186/s13578-023-01180-7
+ERI3	1	novel/uncurated			
+NEIL3	1	novel/uncurated			
+FCER1A	1	novel/uncurated			
+AC008875.3	1	novel/uncurated			
+PCDHGA1	1	novel/uncurated			
+CPA3	1	novel/uncurated			
+LHFPL2	1	novel/uncurated			
+CD1E	1	novel/uncurated			
+IGF1	1	novel/uncurated			
+AC008453.1	1	novel/uncurated			
+MYOSLID	1	novel/uncurated			
+WNT5A	1	novel/uncurated			
+EIF4G1	1	novel/uncurated			
+ANAPC1	1	novel/uncurated			
+CDKN2B|AL449423.1	1	novel/uncurated			
+COL14A1	1	novel/uncurated			
+PLEC	1	novel/uncurated			
+RN7SKP120	1	novel/uncurated			
+AL353751.1	1	novel/uncurated			
+CLIC5	1	novel/uncurated			
+CAAP1|H3P31|RN7SL100P	1	novel/uncurated			
+AL353746.1	1	novel/uncurated			
+ASTN1	1	novel/uncurated			

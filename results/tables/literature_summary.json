@@ -1,0 +1,10 @@
+{
+  "n_genes": 44,
+  "n_literature_supported": 3,
+  "n_mpm_specific": 2,
+  "supported_genes": [
+    "COL7A1",
+    "CDC20",
+    "MYBL2"
+  ]
+}

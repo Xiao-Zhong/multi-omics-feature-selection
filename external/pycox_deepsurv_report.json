@@ -1,0 +1,80 @@
+{
+  "chosen_hp": {
+    "nodes": [
+      64,
+      32
+    ],
+    "lr": 0.01,
+    "dropout": 0.1
+  },
+  "cv_oof_cindex": 0.7358490566037735,
+  "insample_cindex": 0.8336768669732044,
+  "sweep": [
+    {
+      "hp": {
+        "nodes": [
+          32,
+          32
+        ],
+        "lr": 0.01,
+        "dropout": 0.1
+      },
+      "oof_cindex": 0.7069922308546059
+    },
+    {
+      "hp": {
+        "nodes": [
+          64,
+          32
+        ],
+        "lr": 0.01,
+        "dropout": 0.1
+      },
+      "oof_cindex": 0.7358490566037735
+    },
+    {
+      "hp": {
+        "nodes": [
+          32,
+          32
+        ],
+        "lr": 0.001,
+        "dropout": 0.1
+      },
+      "oof_cindex": 0.7182495639765341
+    },
+    {
+      "hp": {
+        "nodes": [
+          32,
+          32
+        ],
+        "lr": 0.01,
+        "dropout": 0.3
+      },
+      "oof_cindex": 0.7139686063104487
+    }
+  ],
+  "top_panel": [
+    "METbod:cg24967096",
+    "METenh:cg10190843",
+    "METenh:cg27353926",
+    "METpro:cg26270195",
+    "METenh:cg09154264",
+    "METpro:cg11626629",
+    "EXPR:COL7A1",
+    "EXPR:CLIC5",
+    "METenh:cg14552514",
+    "LOH:CAAP1|H3P31|RN7SL100P",
+    "METbod:cg09006667",
+    "LOH:AL353746.1",
+    "METbod:cg11299543",
+    "METenh:cg20468815",
+    "METpro:cg23167351",
+    "METbod:cg10486834",
+    "METbod:cg00225902",
+    "EXPR:DSCAML1",
+    "METenh:cg15613991",
+    "EXPR:ASTN1"
+  ]
+}

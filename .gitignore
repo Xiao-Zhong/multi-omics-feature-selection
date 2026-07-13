@@ -1,0 +1,27 @@
+# ---- environments (rebuildable; large) ----
+.venv/
+external/.venv_pycox/
+external/Rlib/
+
+# ---- build / tmp / cache / logs ----
+env/
+external/tmp/
+external/pipcache/
+__pycache__/
+*.pyc
+*.log
+
+# ---- cloned third-party repos (external deps, not vendored) ----
+external/DeepKEGG/
+external/DeePathNet/
+external/NetworkLasso/
+external/PAWPH/
+
+# ---- patient-level data: NOT redistributable (MESOMICS / TCGA data-use terms) ----
+data/
+external/pawph_X.csv
+external/pawph_surv.csv
+
+# ---- large binaries ----
+*.CEL
+*.pth

@@ -1,0 +1,14 @@
+{
+  "parts": 4,
+  "repeats": 50,
+  "seed": 42,
+  "landmark": 12.9,
+  "uni_stable": 40,
+  "biv_pairs": 0,
+  "biv_feats": 0,
+  "panel_sizes": {
+    "Inhouse-Univariate": 6,
+    "Inhouse-Bivariate": 0,
+    "Inhouse-Union": 6
+  }
+}

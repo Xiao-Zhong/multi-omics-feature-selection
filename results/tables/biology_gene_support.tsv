@@ -1,0 +1,11 @@
+panel	n_genes	biological_support	n_enriched_pathways	mpm_known
+RSF	13	0.308	8	
+SIS	8	0.25	1	
+XGBoost	9	0.222	1	
+Inhouse-Univariate	5	0.2	0	
+Inhouse-Bivariate	6	0.167	0	
+Consensus-Vote2	12	0.167	1	
+Consensus-TopK	12	0.167	1	
+Inhouse-Union	9	0.111	0	
+LASSO-Cox	14	0.071	0	
+DeepSurv	9	0.0	0	

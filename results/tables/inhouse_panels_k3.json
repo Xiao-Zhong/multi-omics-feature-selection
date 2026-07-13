@@ -1,0 +1,30 @@
+{
+  "Inhouse-Univariate": [
+    "METbod:cg02227919",
+    "METbod:cg05760722",
+    "METbod:cg10482508",
+    "METbod:cg18118262",
+    "METbod:cg20800509",
+    "METbod:cg24725522",
+    "METbod:cg25778535",
+    "METenh:cg19380996",
+    "METpro:cg14901243"
+  ],
+  "Inhouse-Bivariate": [
+    "METbod:cg07470512",
+    "METenh:cg02524099"
+  ],
+  "Inhouse-Union": [
+    "METbod:cg02227919",
+    "METbod:cg05760722",
+    "METbod:cg07470512",
+    "METbod:cg10482508",
+    "METbod:cg18118262",
+    "METbod:cg20800509",
+    "METbod:cg24725522",
+    "METbod:cg25778535",
+    "METenh:cg02524099",
+    "METenh:cg19380996",
+    "METpro:cg14901243"
+  ]
+}

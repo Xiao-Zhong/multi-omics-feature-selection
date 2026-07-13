@@ -1,0 +1,36 @@
+{
+  "Inhouse-Univariate": [
+    "EXPR:COL7A1",
+    "EXPR:CPXM2",
+    "EXPR:UBE2C",
+    "METenh:cg02062632",
+    "METenh:cg17476701",
+    "METpro:cg19598416"
+  ],
+  "Inhouse-Bivariate": [
+    "EXPR:CHL1",
+    "METbod:cg07470512",
+    "METbod:cg24967096",
+    "METenh:cg02062632",
+    "METenh:cg12126732",
+    "METenh:cg25124440",
+    "METpro:cg19241689",
+    "METpro:cg19598416",
+    "METpro:cg21144922"
+  ],
+  "Inhouse-Union": [
+    "EXPR:CHL1",
+    "EXPR:COL7A1",
+    "EXPR:CPXM2",
+    "EXPR:UBE2C",
+    "METbod:cg07470512",
+    "METbod:cg24967096",
+    "METenh:cg02062632",
+    "METenh:cg12126732",
+    "METenh:cg17476701",
+    "METenh:cg25124440",
+    "METpro:cg19241689",
+    "METpro:cg19598416",
+    "METpro:cg21144922"
+  ]
+}

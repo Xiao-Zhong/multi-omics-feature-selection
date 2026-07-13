@@ -1,0 +1,41 @@
+gene	top_celltype	top_mean_expr	pct_expressing_top	n_panels	expressed
+PPP1R18	Neutrophils	4.641	62.6	7	True
+B3GALT4	B cells	0.617	7.2	7	True
+COL7A1	Pericyte	0.226	3.3	6	True
+UBE2C	SmoothMuscle	0.215	2.8	6	True
+CALY	SmoothMuscle	0.067	0.9	6	False
+CAPN2	Mesothelial	7.057	90.3	5	True
+SLC22A5	Mesothelial	2.195	32.3	4	True
+LRIG1	T cells	2.171	26.1	4	True
+DSCAML1	Mesothelial	1.249	18.4	4	True
+LRRN3	T cells	0.693	8.2	4	True
+DKK2	Fibroblast	0.491	7.4	4	True
+LVRN	Mast cells	0.188	3.3	4	True
+CPXM2	Endothelial	4.131	55.1	2	True
+CHL1	Fibroblast	1.242	18.4	2	True
+AL160171.1	Dendritic	0.227	3.5	2	True
+CPA3	Mast cells	8.691	98.5	1	True
+IGF1	Fibroblast	6.443	82.3	1	True
+COL14A1	Fibroblast	5.883	76.3	1	True
+LHFPL2	Neutrophils	5.409	67.7	1	True
+BCAR3	Dendritic	4.878	63.8	1	True
+EIF4G1	Dendritic	4.87	66.8	1	True
+CLIC5	Mesothelial	4.156	57.6	1	True
+MYBL2	Dendritic	3.998	53.7	1	True
+PLEC	T cells	3.544	44.5	1	True
+ERI3	Mesothelial	3.436	50.0	1	True
+ASAP2	Pericyte	3.214	44.0	1	True
+MELTF	Dendritic	2.929	38.9	1	True
+FCER1A	Mast cells	2.825	44.1	1	True
+AC008875.3	Endothelial	2.241	31.1	1	True
+ANAPC1	Dendritic	1.525	21.8	1	True
+WNT5A	Mesothelial	1.412	21.4	1	True
+ASTN1	Mesothelial	0.725	10.9	1	True
+CD1E	T cells	0.707	9.0	1	True
+MYOSLID	T cells	0.387	5.3	1	True
+CDC20	Mesothelial	0.246	3.7	1	True
+NEIL3	T cells	0.132	1.8	1	True
+PCDHGA1	SmoothMuscle	0.092	1.2	1	False
+AC008453.1	Endothelial	0.007	0.1	1	False
+AL353751.1	Endothelial	0.005	0.1	1	False
+AL353746.1	T cells	0.003	0.1	1	False

@@ -1,0 +1,4 @@
+K	per_part_n	per_part_valid_label	per_part_min_class	uni_stable	biv_pairs	union_size	n_genes	C_internal_cv	Cexpr_mean	C_native_mean
+2	59	58	23	40	0	13	4	0.768	0.672	0.681
+3	39	37	16	40	1	11	3	0.728	0.581	0.637
+4	29	27	11	40	0	6	3	0.604	0.615	0.621

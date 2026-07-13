@@ -1,0 +1,26 @@
+{
+  "n_genes": 40,
+  "n_expressed": 35,
+  "celltype_of_top_genes": {
+    "PPP1R18": "Neutrophils",
+    "B3GALT4": "B cells",
+    "COL7A1": "Pericyte",
+    "UBE2C": "SmoothMuscle",
+    "CALY": "SmoothMuscle",
+    "CAPN2": "Mesothelial",
+    "SLC22A5": "Mesothelial",
+    "LRIG1": "T cells",
+    "DSCAML1": "Mesothelial",
+    "LRRN3": "T cells",
+    "DKK2": "Fibroblast",
+    "LVRN": "Mast cells",
+    "CPXM2": "Endothelial",
+    "CHL1": "Fibroblast",
+    "AL160171.1": "Dendritic",
+    "CPA3": "Mast cells",
+    "IGF1": "Fibroblast",
+    "COL14A1": "Fibroblast",
+    "LHFPL2": "Neutrophils",
+    "BCAR3": "Dendritic"
+  }
+}

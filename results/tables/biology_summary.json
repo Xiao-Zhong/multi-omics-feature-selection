@@ -1,0 +1,106 @@
+{
+  "Inhouse-Univariate": {
+    "n_genes": 5,
+    "n_enriched_pathways": 0,
+    "top_pathways": [],
+    "min_q": NaN,
+    "mpm_known": [],
+    "n_cancer_pathway_genes": 1,
+    "biological_support": 0.2
+  },
+  "Inhouse-Bivariate": {
+    "n_genes": 6,
+    "n_enriched_pathways": 0,
+    "top_pathways": [],
+    "min_q": NaN,
+    "mpm_known": [],
+    "n_cancer_pathway_genes": 1,
+    "biological_support": 0.167
+  },
+  "Inhouse-Union": {
+    "n_genes": 9,
+    "n_enriched_pathways": 0,
+    "top_pathways": [],
+    "min_q": NaN,
+    "mpm_known": [],
+    "n_cancer_pathway_genes": 1,
+    "biological_support": 0.111
+  },
+  "SIS": {
+    "n_genes": 8,
+    "n_enriched_pathways": 1,
+    "top_pathways": [
+      "hsa04120_Ubiquitin_mediated_proteolysis"
+    ],
+    "min_q": 0.0002478682836114775,
+    "mpm_known": [],
+    "n_cancer_pathway_genes": 1,
+    "biological_support": 0.25
+  },
+  "LASSO-Cox": {
+    "n_genes": 14,
+    "n_enriched_pathways": 0,
+    "top_pathways": [],
+    "min_q": NaN,
+    "mpm_known": [],
+    "n_cancer_pathway_genes": 1,
+    "biological_support": 0.071
+  },
+  "RSF": {
+    "n_genes": 13,
+    "n_enriched_pathways": 8,
+    "top_pathways": [
+      "hsa04914_Progesterone-mediated_oocyte_maturation",
+      "hsa04114_Oocyte_meiosis",
+      "hsa04150_mTOR_signaling_pathway",
+      "hsa04550_Signaling_pathways_regulating_pluripotency_of_stem_cells",
+      "hsa04310_Wnt_signaling_pathway"
+    ],
+    "min_q": 0.0023298099447445542,
+    "mpm_known": [],
+    "n_cancer_pathway_genes": 4,
+    "biological_support": 0.308
+  },
+  "XGBoost": {
+    "n_genes": 9,
+    "n_enriched_pathways": 1,
+    "top_pathways": [
+      "hsa04974_Protein_digestion_and_absorption"
+    ],
+    "min_q": 0.0009117676577203327,
+    "mpm_known": [],
+    "n_cancer_pathway_genes": 0,
+    "biological_support": 0.222
+  },
+  "DeepSurv": {
+    "n_genes": 9,
+    "n_enriched_pathways": 0,
+    "top_pathways": [],
+    "min_q": NaN,
+    "mpm_known": [],
+    "n_cancer_pathway_genes": 0,
+    "biological_support": 0.0
+  },
+  "Consensus-Vote2": {
+    "n_genes": 12,
+    "n_enriched_pathways": 1,
+    "top_pathways": [
+      "hsa05022_Pathways_of_neurodegeneration"
+    ],
+    "min_q": 0.008684949580557523,
+    "mpm_known": [],
+    "n_cancer_pathway_genes": 2,
+    "biological_support": 0.167
+  },
+  "Consensus-TopK": {
+    "n_genes": 12,
+    "n_enriched_pathways": 1,
+    "top_pathways": [
+      "hsa05022_Pathways_of_neurodegeneration"
+    ],
+    "min_q": 0.008684949580557523,
+    "mpm_known": [],
+    "n_cancer_pathway_genes": 2,
+    "biological_support": 0.167
+  }
+}

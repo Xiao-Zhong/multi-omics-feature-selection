@@ -1,0 +1,19 @@
+{
+  "Inhouse-Univariate": [
+    "ALT:TRIP12",
+    "ALT:TRPC1",
+    "EXPR:KRT14",
+    "EXPR:PRG4",
+    "EXPR:SYT4",
+    "SV:total"
+  ],
+  "Inhouse-Bivariate": [],
+  "Inhouse-Union": [
+    "ALT:TRIP12",
+    "ALT:TRPC1",
+    "EXPR:KRT14",
+    "EXPR:PRG4",
+    "EXPR:SYT4",
+    "SV:total"
+  ]
+}
