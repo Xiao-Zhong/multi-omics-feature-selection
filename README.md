@@ -25,6 +25,8 @@ Repeated event-stratified split screening (univariate χ² + epistasis hubs) →
 LASSO-Cox → union of features that reproduce across resamples. See [`omicsfs/README.md`](omicsfs/README.md)
 and run the demo: `python -m omicsfs.example`.
 
+![In-house reliability-first feature-selection workflow](results/figures/fig_workflow.png)
+
 ## Benchmark
 
 Every method starts from the same 800-feature pre-screen pool and is scored by one common evaluation
@@ -41,6 +43,8 @@ survival methods are used as comparators:
 | DeepSurv | **native `pycox`** (run in an isolated env) |
 
 The in-house panel generalizes best on cross-cohort transfer (though CIs overlap at n=120).
+
+![Benchmark design](results/figures/fig_benchmark.png)
 
 ## Run
 
