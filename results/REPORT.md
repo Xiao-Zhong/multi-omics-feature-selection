@@ -2,13 +2,31 @@
 
 Reliability-first feature selection trained on **MESOMICS multi-omics** (expression, gene-focused CNV, LOH, methylation, driver alterations, SV burden), validated by cross-cohort survival transfer, biological pathway analysis, single-cell expression, and a literature check. Every figure is embedded below with a description.
 
+**Code:** https://github.com/Xiao-Zhong/multi-omics-feature-selection
+
 ## Project description
 
-**What we built & investigated.** A reliability-first multi-omics feature-selection pipeline for malignant pleural mesothelioma (MPM) prognosis. It selects prognostic biomarker panels from the MESOMICS cohort (120 patients × ~25,000 features spanning expression, DNA methylation, LOH, CNV and driver alterations) and validates them by survival transfer to external cohorts, KEGG pathway enrichment, single-cell cell-type expression, and a curated literature check. Before benchmarking the in-house selectors against third-party methods we **audited the comparators**: homemade heuristics that merely borrowed famous names (a "Network-LASSO" that is not Hallac's Network Lasso; a "PAWPH" that does not reproduce the real method) were removed, and two deep-learning tools (DeepKEGG, DeePathNet) were dropped because they are not survival models at all. We then ran the *genuine* upstream tools (`pycox` DeepSurv, the original R PAWPH) to measure reimplementation fidelity, hyperparameter-tuned the tree/deep models so none were handicapped, and reconstructed a validation cohort (French E-MTAB-1719) from raw microarray CEL files. Finally we reframed the selected features into a drug-discovery **Target Dossier** (direction of effect, cell-of-origin, druggability, immuno-oncology relevance).
+**We developed a new feature-selection workflow.** A *reliability-first* method for high-dimensional, small-sample omics survival data: repeated event-stratified split screening + epistasis-hub detection + bootstrap stability LASSO-Cox, combined so that only features reproducing across resamples survive (released as the reusable `omicsfs` library). We applied it to malignant pleural mesothelioma (MPM) on the MESOMICS cohort (120 patients × ~25,000 multi-omic features: expression, DNA methylation, LOH, CNV, driver alterations).
 
-**What we found.** The in-house consensus panel generalizes best across cohorts (expression-surrogate C-index ~0.67; native multi-omics transfer to TCGA ~0.72), edging established methods — though at n=120 the bootstrap confidence intervals overlap, so this is "competitive and best-generalizing," not a statistically separated win. Two methodological results stand out: (1) a reimplementation can match a tool's *predictive performance* yet select a *different panel* — our DeepSurv reimplementation vs native `pycox` had an identical C-index but shared only 7/20 features — so unverified reimplementations are unsafe biomarker comparators; and (2) internal cross-validation is optimistic and disagrees with cross-cohort transfer, so transfer must be the primary endpoint. Biologically, the prognostic signal sits largely *outside* canonical driver pathways, and several top targets are immune-compartment genes (T-cell, mast, neutrophil, dendritic).
+**We benchmarked it against commonly used methods.** Head-to-head against SIS, LASSO-Cox, hyperparameter-tuned Random Survival Forest and XGBoost, and native `pycox` DeepSurv — every model tuned so none is handicapped — under one common evaluation: cross-cohort survival transfer to external cohorts (with bootstrap confidence intervals), KEGG pathway enrichment, single-cell cell-type expression, and a curated-literature check.
+
+**We selected panels of prognostic features for mesothelioma to take forward.** The workflow yields reproducible, cross-cohort-validated biomarker panels — a shortlist of candidate features for further experimental validation — which we also reframe into a drug-discovery **Target Dossier** (direction of effect, cell-of-origin, druggability, immuno-oncology relevance).
+
+**What we found.** The in-house consensus panel generalizes best across cohorts (expression-surrogate C-index ~0.67; native multi-omics transfer to TCGA ~0.72), edging established methods — though at n=120 the bootstrap confidence intervals overlap, so this is "competitive and best-generalizing," not a statistically separated win. A key methodological result: **internal cross-validation is optimistic and disagrees with cross-cohort transfer**, so transfer must be the primary endpoint (methods that top internal CV can fall off sharply out-of-cohort). Biologically, the prognostic signal sits largely *outside* canonical driver pathways, and several top targets are immune-compartment genes (T-cell, mast, neutrophil, dendritic).
 
 **Why it matters.** Methodologically, this is a template for a *defensible* biomarker benchmark — verified comparators only, honest confidence intervals, generalization prized over internal fit — that resists the strawman-baseline critique. Translationally, it delivers a short, druggable, immuno-oncology-relevant target shortlist for MPM, an asbestos-linked cancer with few effective therapies and growing use of immunotherapy.
+
+## Approach at a glance
+
+
+![The in-house reliability-first workflow: repeated event-stratified split screening (univariate + epistasis) feeds a bootstrap stability LASSO-Cox; only features that reproduce across both survive into the union panel.](figures/fig_workflow.png)
+
+*The in-house reliability-first workflow: repeated event-stratified split screening (univariate + epistasis) feeds a bootstrap stability LASSO-Cox; only features that reproduce across both survive into the union panel.*
+
+
+![Benchmark design: every method starts from the same pre-screen pool and is scored by one common cross-cohort evaluation with bootstrap CIs, so comparisons are fair.](figures/fig_benchmark.png)
+
+*Benchmark design: every method starts from the same pre-screen pool and is scored by one common cross-cohort evaluation with bootstrap CIs, so comparisons are fair.*
 
 ## 1. Headline
 
@@ -221,3 +239,11 @@ The 2-part split was generalized to K parts (a feature must rank top in ALL K pa
 - **Gene-focused features:** CNV = canonical MPM drivers (NF2/BAP1/CDKN2A/CDKN2B/MTAP/TERT) from S36; methylation probes annotated to genes (450K → GENCODE v36).
 - **Small n (120 train):** C-indices are modest by design; the pipeline optimizes for *reproducible* features (repeated-split ensemble + bootstrap stability + cross-method consensus + out-of-cohort transfer + biology/scRNA/literature) over any single number.
 - See `DESIGN.md` for the full workflow.
+
+## How we used Claude
+
+This project was built end-to-end with **Claude Code** — Anthropic's agentic coding CLI (running Claude Fable 5) — working directly in the repository: writing and running every pipeline stage, cloning and executing third-party tools, debugging, and preparing the release. It mattered most in three places:
+
+- **Methodological auditing.** Claude Code caught that several "third-party" comparators were unverified in-house reimplementations rather than the real tools, cloned and ran the *genuine* upstream implementation of DeepSurv (`pycox`) to test reimplementation fidelity, and recommended keeping only faithful, verified survival methods as comparators — turning a naive benchmark into a defensible one with bootstrap confidence intervals and cross-cohort transfer as the primary endpoint.
+- **Data forensics.** When a recovered validation cohort scored at chance, Claude Code diagnosed it: it found a x12 survival-time unit error and *proved the expression was correctly aligned* to patients by inferring each sample's sex from XIST / Y-gene expression and matching the metadata (28/29) — separating a genuine limitation (underpowered, cross-platform) from a fixable bug.
+- **Reproducibility & reuse.** It reconstructed the French cohort's genome-wide expression from raw microarray CEL files, built the drug-discovery Target Dossier, packaged the in-house method into a reusable `omicsfs` library, and prepared the clean, data-safe GitHub repository.

@@ -1,55 +1,80 @@
-# MPM multi-omics prognostic biomarker feature-selection pipeline
+# Multi-omics prognostic feature selection for mesothelioma
 
-Reliability-first discovery of prognostic **biomarker panels** for malignant **pleural**
-mesothelioma, trained on **MESOMICS multi-omics** and validated by cross-cohort survival transfer.
-Built from scratch, self-contained (isolated `.venv`, no dependency on root or a prior workspace).
+**We developed a new, reliability-first feature-selection workflow**, **benchmarked it against
+commonly used methods**, and **selected reproducible prognostic biomarker panels for malignant
+pleural mesothelioma (MPM)** to take forward for validation.
+
+Trained on **MESOMICS multi-omics** (120 patients × ~25,000 features), validated by cross-cohort
+survival transfer, biological pathway analysis, single-cell expression, and literature. Self-contained
+(isolated `.venv` on `/mnt/data`, fixed seed 42).
+
+Full results with figures: **[`results/REPORT.md`](results/REPORT.md)** · method details:
+**[`DESIGN.md`](DESIGN.md)**.
+
+## The workflow, as a reusable tool — `omicsfs`
+
+The core method is packaged as a small, cohort-agnostic library ([`omicsfs/`](omicsfs/)):
+
+```python
+from omicsfs import OmicsSurvivalSelector
+sel = OmicsSurvivalSelector().fit(X, durations=t, events=e)   # X: samples × features
+sel.selected_features_        # reproducible prognostic panel
+```
+
+Repeated event-stratified split screening (univariate χ² + epistasis hubs) → bootstrap stability
+LASSO-Cox → union of features that reproduce across resamples. See [`omicsfs/README.md`](omicsfs/README.md)
+and run the demo: `python -m omicsfs.example`.
+
+## Benchmark
+
+Every method starts from the same 800-feature pre-screen pool and is scored by one common evaluation
+(internal 5-fold CV + cross-cohort transfer with 95% bootstrap CIs). Only **faithful, verified**
+survival methods are used as comparators:
+
+| method | notes |
+|---|---|
+| **In-house workflow** | reliability-first (omicsfs) — the method under test |
+| SIS | marginal Cox screening (sure independence screening) |
+| LASSO-Cox | plain L1-penalized Cox |
+| RSF | Random Survival Forest, OOB-tuned |
+| XGBoost | gradient-boosted Cox, CV-tuned |
+| DeepSurv | **native `pycox`** (run in an isolated env) |
+
+The in-house panel generalizes best on cross-cohort transfer (though CIs overlap at n=120).
 
 ## Run
 
 ```bash
-bash run_all.sh          # stages 1 → 5, output in results/
+bash run_all.sh          # full pipeline → results/
 ```
 
-Interpreter: `./.venv/bin/python` (isolated environment on /mnt/data). Fixed seed 42.
+## Pipeline stages (`src/`)
 
-## What it does
-
-1. **Build** a 120-sample MESOMICS multi-omics feature matrix — expression, recurrent CNV peaks,
-   LOH, methylation (promoter/gene-body/enhancer), somatic driver alterations, SV burden (~25.5k features).
-2. **In-house selection** — ensemble of repeated 2-part splits with χ² top-300 intersection
-   (univariate) + epistatic pair test (bivariate), then bootstrap **stability LASSO-Cox**, then union.
-3. **Third-party selectors** — SIS, pawph, Network-LASSO, RSF, XGBoost, DeepSurv, DeepKEGG, DeePathNet,
-   and a transfer-learning DeepSurv.
-4. **Ensemble/consensus** — cross-method vote aggregation (kept if it beats the best tool).
-5. **Evaluate** — every panel trained on MESOMICS, transferred to TCGA (multi-omics), Bueno, NCI, Blum,
-   French; ranked by external-transfer C-index.
-
-See **`DESIGN.md`** for the full method and **`results/REPORT.md`** for results.
-
-## Layout
-
-```
-mpm_multiomics_pipeline/
-├── run_all.sh
-├── DESIGN.md · README.md
-├── .venv/                       isolated interpreter (on /mnt/data)
-├── src/
-│   ├── common.py                config, loaders, discretization, survival metrics
-│   ├── 01_build_data.py         MESOMICS multi-omics train matrix + survival
-│   ├── 02_build_validation.py   transferable TCGA methylation/alteration layers
-│   ├── 03_featsel_inhouse.py    ensemble split + epistasis + stability LASSO-Cox
-│   ├── 04_featsel_thirdparty.py 8 selectors + transfer-learning DeepSurv
-│   ├── 05_consensus.py          ensemble / consensus panels
-│   ├── 06_evaluate.py           cross-cohort transfer C-index
-│   └── 07_report.py             figures + REPORT.md
-├── data/processed/              built matrices + feature annotation
-└── results/tables · figures · REPORT.md
-```
+| stage | script | does |
+|---|---|---|
+| 1 | `01_build_data.py` | MESOMICS multi-omics matrix + survival |
+| 1b | `02_build_validation.py` | transferable TCGA methylation/alteration layers |
+| 2 | `03_featsel_inhouse.py` | in-house reliability-first selection (the `omicsfs` method) |
+| 3 | `04_featsel_thirdparty.py` | SIS, LASSO-Cox, tuned RSF/XGBoost, native pycox DeepSurv |
+| 3b | `05_consensus.py` | cross-method consensus panels |
+| 4 | `06_evaluate.py` | cross-cohort transfer C-index + bootstrap CIs |
+| 6 | `08_biology.py` | KEGG pathway enrichment / cancer-network check |
+| 7 | `09_singlecell.py` | pleura scRNA cell-type expression |
+| 8 | `10_literature.py` | curated prognostic-evidence check |
+| 9 | `11_target_dossier.py` | drug-discovery target cards (direction, druggability, immuno-oncology) |
+| 5 | `07_report.py` | figures + `REPORT.md` |
 
 ## Cohorts (all pleural MPM)
 
 | cohort | role | layers used in transfer |
 |---|---|---|
 | MESOMICS | **train** | all (EXPR, CNV, LOH, MET×3, ALT, SV) |
-| TCGA-MESO (74 Hmeljak-2018) | validation | EXPR + METH + ALT (multi-omics) |
-| Bueno 2016 / NCI 2023 / Blum 2019 / French | validation | EXPR |
+| TCGA-MESO (Hmeljak 2018) | validation | EXPR + methylation + alterations (multi-omics) |
+| Bueno 2016 / NCI 2023 / Blum 2019 | validation | EXPR (gene-expression surrogate) |
+
+## Data availability
+
+Patient-level MESOMICS / TCGA matrices are **not** included in this repository (data-use terms). The
+code expects them under `data/processed/`; obtain the source cohorts under their original terms to
+reproduce. Environments (`.venv`, `external/.venv_pycox`, R libs) are rebuildable and gitignored;
+see `requirements.txt` and `requirements-pycox.txt`.

@@ -26,6 +26,67 @@ def img(fname, caption):
         return ""
     return f"\n![{caption}](figures/{fname})\n\n*{caption}*\n"
 
+# --------------------------------------------------------------------- schematic diagrams
+def _dbox(ax, x, y, w, h, text, fc, ec="#444", fs=9, weight="normal"):
+    from matplotlib.patches import FancyBboxPatch
+    ax.add_patch(FancyBboxPatch((x - w / 2, y - h / 2), w, h,
+                 boxstyle="round,pad=0.015,rounding_size=0.06", fc=fc, ec=ec, lw=1.3))
+    ax.text(x, y, text, ha="center", va="center", fontsize=fs, weight=weight)
+
+def _darrow(ax, x1, y1, x2, y2, color="#666"):
+    ax.annotate("", xy=(x2, y2), xytext=(x1, y1),
+                arrowprops=dict(arrowstyle="-|>", color=color, lw=1.5, shrinkA=2, shrinkB=2))
+
+def fig_workflow():
+    fig, ax = plt.subplots(figsize=(7.6, 8.0)); ax.set_xlim(0, 10); ax.set_ylim(2.4, 12); ax.axis("off")
+    _dbox(ax, 5, 11.2, 8.4, 1.0, "MESOMICS multi-omics\n120 patients × ~25,000 features\n"
+          "(expression · methylation · LOH · CNV · driver alterations)", "#dfeaf6", fs=8.3, weight="bold")
+    _darrow(ax, 5, 10.7, 5, 10.15)
+    _dbox(ax, 5, 9.6, 7.4, 0.95, "Repeated event-stratified K-part splits  (×50)\n"
+          "+ landmark poor / good survival label", "#e8f3e0", fs=8.5)
+    _darrow(ax, 4.1, 9.12, 3, 8.55); _darrow(ax, 5.9, 9.12, 7, 8.55)
+    _dbox(ax, 3, 7.8, 4.4, 1.5, "① Univariate χ² screening\nkeep features top-ranked\nin ALL K parts\n"
+          "→ reproducible marginals", "#fbe4d6", fs=8)
+    _dbox(ax, 7, 7.8, 4.4, 1.5, "② Epistasis screen\njoint χ² > both marginals\n→ interaction-hub genes\n"
+          "in ALL K parts", "#fbe4d6", fs=8)
+    _darrow(ax, 3, 7.05, 4.3, 6.35); _darrow(ax, 7, 7.05, 5.7, 6.35)
+    _dbox(ax, 5, 5.7, 7.4, 1.2, "③ Bootstrap stability LASSO-Cox  (×200)\n"
+          "keep features selected in ≥ 50% of resamples\n(mild L2 stabilizes collinear selection)",
+          "#f3dfe8", fs=8.3)
+    _darrow(ax, 5, 5.1, 5, 4.55)
+    _dbox(ax, 5, 3.95, 6.6, 0.9, "UNION panel = reproducible multi-omic biomarker set",
+          "#cfe6cb", fs=9.5, weight="bold")
+    ax.text(5, 3.0, "reliability-first: a feature survives only if it reproduces across splits AND bootstraps",
+            ha="center", fontsize=7.8, style="italic", color="#555")
+    ax.set_title("In-house feature-selection workflow  (packaged as omicsfs)", fontsize=11, weight="bold")
+    fig.tight_layout(); fig.savefig(os.path.join(C.FIGS, "fig_workflow.png"), dpi=140); plt.close(fig)
+
+def fig_benchmark():
+    fig, ax = plt.subplots(figsize=(9.6, 6.3)); ax.set_xlim(0, 12); ax.set_ylim(1, 10); ax.axis("off")
+    _dbox(ax, 6, 9.2, 7.8, 0.85, "Shared pre-screen pool  (top-800 univariate prognostic features)",
+          "#dfeaf6", fs=9, weight="bold")
+    selectors = [("In-house\nworkflow", "#cfe6cb", True), ("SIS", "#eef2f8", False),
+                 ("LASSO-\nCox", "#eef2f8", False), ("RSF\n(tuned)", "#eef2f8", False),
+                 ("XGBoost\n(tuned)", "#eef2f8", False), ("DeepSurv\n(pycox)", "#eef2f8", False)]
+    xs = np.linspace(1.5, 10.5, len(selectors))
+    for x, (name, fc, hi) in zip(xs, selectors):
+        _darrow(ax, 6, 8.77, x, 7.6)
+        _dbox(ax, x, 7.05, 1.6, 1.0, name, fc, fs=8, weight="bold" if hi else "normal",
+              ec="#c0392b" if hi else "#556")
+        _darrow(ax, x, 6.55, x, 6.0)
+        _dbox(ax, x, 5.6, 1.6, 0.66, "top-K\npanel", "#f7f2df", fs=7.5)
+        _darrow(ax, x, 5.27, 6, 4.4)
+    _dbox(ax, 6, 3.75, 9.4, 1.25, "Common evaluation — identical for every panel\n"
+          "internal 5-fold CV C-index  ·  cross-cohort transfer (TCGA / BUENO / NCI / BLUM)\n"
+          "gene-expression surrogate + native multi-omics  ·  95% bootstrap confidence intervals",
+          "#e8f3e0", fs=8.2)
+    _darrow(ax, 6, 3.12, 6, 2.55)
+    _dbox(ax, 6, 2.0, 8.0, 0.8, "Rank by cross-cohort transfer  →  in-house workflow generalizes best",
+          "#fbe4d6", fs=9, weight="bold")
+    ax.set_title("Benchmark design: our workflow vs commonly used methods, one common evaluation",
+                 fontsize=10.5, weight="bold")
+    fig.tight_layout(); fig.savefig(os.path.join(C.FIGS, "fig_benchmark.png"), dpi=140); plt.close(fig)
+
 # --------------------------------------------------------------------- figures
 def fig_eval(df):
     d = df.dropna(subset=["Cexpr_mean"]).sort_values("Cexpr_mean")
@@ -111,6 +172,7 @@ def main():
     voters = load_voters()
 
     fig_eval(ev); fig_cindex_heatmaps(ev); fig_votes(votes); fig_feature_heatmap(voters, votes, ann)
+    fig_workflow(); fig_benchmark()
 
     ev = ev.sort_values("Cexpr_mean", ascending=False)
     best = ev.iloc[0]; best_feats = panels.get(best["panel"], [])
@@ -126,43 +188,55 @@ def main():
              "(expression, gene-focused CNV, LOH, methylation, driver alterations, SV burden), "
              "validated by cross-cohort survival transfer, biological pathway analysis, single-cell "
              "expression, and a literature check. Every figure is embedded below with a description.\n")
+    L.append("**Code:** https://github.com/Xiao-Zhong/multi-omics-feature-selection\n")
 
     # ---- project description ----
     L.append("## Project description\n")
     L.append(
-        "**What we built & investigated.** A reliability-first multi-omics feature-selection pipeline "
-        "for malignant pleural mesothelioma (MPM) prognosis. It selects prognostic biomarker panels "
-        "from the MESOMICS cohort (120 patients × ~25,000 features spanning expression, DNA "
-        "methylation, LOH, CNV and driver alterations) and validates them by survival transfer to "
-        "external cohorts, KEGG pathway enrichment, single-cell cell-type expression, and a curated "
-        "literature check. Before benchmarking the in-house selectors against third-party methods we "
-        "**audited the comparators**: homemade heuristics that merely borrowed famous names (a "
-        "\"Network-LASSO\" that is not Hallac's Network Lasso; a \"PAWPH\" that does not reproduce the "
-        "real method) were removed, and two deep-learning tools (DeepKEGG, DeePathNet) were dropped "
-        "because they are not survival models at all. We then ran the *genuine* upstream tools "
-        "(`pycox` DeepSurv, the original R PAWPH) to measure reimplementation fidelity, "
-        "hyperparameter-tuned the tree/deep models so none were handicapped, and reconstructed a "
-        "validation cohort (French E-MTAB-1719) from raw microarray CEL files. Finally we reframed the "
-        "selected features into a drug-discovery **Target Dossier** (direction of effect, "
-        "cell-of-origin, druggability, immuno-oncology relevance).\n")
+        "**We developed a new feature-selection workflow.** A *reliability-first* method for "
+        "high-dimensional, small-sample omics survival data: repeated event-stratified split "
+        "screening + epistasis-hub detection + bootstrap stability LASSO-Cox, combined so that only "
+        "features reproducing across resamples survive (released as the reusable `omicsfs` library). "
+        "We applied it to malignant pleural mesothelioma (MPM) on the MESOMICS cohort (120 patients × "
+        "~25,000 multi-omic features: expression, DNA methylation, LOH, CNV, driver alterations).\n")
+    L.append(
+        "**We benchmarked it against commonly used methods.** Head-to-head against SIS, LASSO-Cox, "
+        "hyperparameter-tuned Random Survival Forest and XGBoost, and native `pycox` DeepSurv — every "
+        "model tuned so none is handicapped — under one common evaluation: cross-cohort survival "
+        "transfer to external cohorts (with bootstrap confidence intervals), KEGG pathway enrichment, "
+        "single-cell cell-type expression, and a curated-literature check.\n")
+    L.append(
+        "**We selected panels of prognostic features for mesothelioma to take forward.** The workflow "
+        "yields reproducible, cross-cohort-validated biomarker panels — a shortlist of candidate "
+        "features for further experimental validation — which we also reframe into a drug-discovery "
+        "**Target Dossier** (direction of effect, cell-of-origin, druggability, immuno-oncology "
+        "relevance).\n")
     L.append(
         "**What we found.** The in-house consensus panel generalizes best across cohorts "
         "(expression-surrogate C-index ~0.67; native multi-omics transfer to TCGA ~0.72), edging "
         "established methods — though at n=120 the bootstrap confidence intervals overlap, so this is "
-        "\"competitive and best-generalizing,\" not a statistically separated win. Two methodological "
-        "results stand out: (1) a reimplementation can match a tool's *predictive performance* yet "
-        "select a *different panel* — our DeepSurv reimplementation vs native `pycox` had an identical "
-        "C-index but shared only 7/20 features — so unverified reimplementations are unsafe biomarker "
-        "comparators; and (2) internal cross-validation is optimistic and disagrees with cross-cohort "
-        "transfer, so transfer must be the primary endpoint. Biologically, the prognostic signal sits "
-        "largely *outside* canonical driver pathways, and several top targets are immune-compartment "
-        "genes (T-cell, mast, neutrophil, dendritic).\n")
+        "\"competitive and best-generalizing,\" not a statistically separated win. A key "
+        "methodological result: **internal cross-validation is optimistic and disagrees with "
+        "cross-cohort transfer**, so transfer must be the primary endpoint (methods that top internal "
+        "CV can fall off sharply out-of-cohort). Biologically, the prognostic signal sits largely "
+        "*outside* canonical driver pathways, and several top targets are immune-compartment genes "
+        "(T-cell, mast, neutrophil, dendritic).\n")
     L.append(
         "**Why it matters.** Methodologically, this is a template for a *defensible* biomarker "
         "benchmark — verified comparators only, honest confidence intervals, generalization prized over "
         "internal fit — that resists the strawman-baseline critique. Translationally, it delivers a "
         "short, druggable, immuno-oncology-relevant target shortlist for MPM, an asbestos-linked cancer "
         "with few effective therapies and growing use of immunotherapy.\n")
+
+    # ---- approach at a glance (diagrams) ----
+    L.append("## Approach at a glance\n")
+    L.append(img("fig_workflow.png",
+                 "The in-house reliability-first workflow: repeated event-stratified split screening "
+                 "(univariate + epistasis) feeds a bootstrap stability LASSO-Cox; only features that "
+                 "reproduce across both survive into the union panel."))
+    L.append(img("fig_benchmark.png",
+                 "Benchmark design: every method starts from the same pre-screen pool and is scored "
+                 "by one common cross-cohort evaluation with bootstrap CIs, so comparisons are fair."))
 
     # ---- headline ----
     L.append("## 1. Headline\n")
@@ -318,6 +392,28 @@ def main():
              "*reproducible* features (repeated-split ensemble + bootstrap stability + cross-method "
              "consensus + out-of-cohort transfer + biology/scRNA/literature) over any single number.")
     L.append("- See `DESIGN.md` for the full workflow.")
+
+    # ---- how we used Claude ----
+    L.append("\n## How we used Claude\n")
+    L.append("This project was built end-to-end with **Claude Code** — Anthropic's agentic coding "
+             "CLI (running Claude Fable 5) — working directly in the repository: writing and running "
+             "every pipeline stage, cloning and executing third-party tools, debugging, and preparing "
+             "the release. It mattered most in three places:\n")
+    L.append("- **Methodological auditing.** Claude Code caught that several \"third-party\" "
+             "comparators were unverified in-house reimplementations rather than the real tools, "
+             "cloned and ran the *genuine* upstream implementation of DeepSurv (`pycox`) to test "
+             "reimplementation fidelity, and recommended keeping only faithful, verified survival "
+             "methods as comparators — turning a naive benchmark into a defensible one with bootstrap "
+             "confidence intervals and cross-cohort transfer as the primary endpoint.")
+    L.append("- **Data forensics.** When a recovered validation cohort scored at chance, Claude Code "
+             "diagnosed it: it found a x12 survival-time unit error and *proved the expression was "
+             "correctly aligned* to patients by inferring each sample's sex from XIST / Y-gene "
+             "expression and matching the metadata (28/29) — separating a genuine limitation "
+             "(underpowered, cross-platform) from a fixable bug.")
+    L.append("- **Reproducibility & reuse.** It reconstructed the French cohort's genome-wide "
+             "expression from raw microarray CEL files, built the drug-discovery Target Dossier, "
+             "packaged the in-house method into a reusable `omicsfs` library, and prepared the clean, "
+             "data-safe GitHub repository.")
 
     open(os.path.join(C.ROOT, "results", "REPORT.md"), "w").write("\n".join(L))
     print("[done] wrote results/REPORT.md with embedded figures + tables")
