@@ -184,11 +184,25 @@ def main():
         return "" if g == "nan" else g
 
     L = ["# MPM multi-omics prognostic biomarker selection — report\n"]
+    L.append("**Xiao Zhong** — The University of Western Australia (bioinformatics postdoc) · "
+             "Track: Researcher\n")
     L.append("Reliability-first feature selection trained on **MESOMICS multi-omics** "
              "(expression, gene-focused CNV, LOH, methylation, driver alterations, SV burden), "
              "validated by cross-cohort survival transfer, biological pathway analysis, single-cell "
              "expression, and a literature check. Every figure is embedded below with a description.\n")
     L.append("**Code:** https://github.com/Xiao-Zhong/multi-omics-feature-selection\n")
+
+    # ---- background & motivation ----
+    L.append("## Background & motivation\n")
+    L.append("Malignant pleural mesothelioma is an aggressive, asbestos-linked cancer of the pleura "
+             "with poor prognosis and few effective therapies. Hundreds of public datasets now "
+             "profile it across modalities — gene expression, somatic mutation, copy-number "
+             "variation, methylation and more — yet this information is scattered and rarely "
+             "integrated. The goal of this project is to use **Claude to automate retrieval and "
+             "integration of public multi-omics datasets** (genomics, transcriptomics, epigenetics), "
+             "then **systematically identify survival-associated features that are reproducible "
+             "across cohorts, biologically meaningful, and have potential for clinical translation** "
+             "— such as cancer-vaccine target discovery.\n")
 
     # ---- project description ----
     L.append("## Project description\n")
