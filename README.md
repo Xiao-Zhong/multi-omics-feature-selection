@@ -50,6 +50,9 @@ The in-house panel generalizes best on cross-cohort transfer (though CIs overlap
 
 ![Top featues selected by multiple tools](results/figures/fig_feature_heatmap.png)
 
+![Gene expression of top genes in cells](results/figures/fig_singlecell_heatmap.png)
+
+
 ## Run
 
 ```bash
