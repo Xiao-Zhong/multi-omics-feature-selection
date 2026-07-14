@@ -46,6 +46,10 @@ The in-house panel generalizes best on cross-cohort transfer (though CIs overlap
 
 ![Benchmark design](results/figures/fig_benchmark.png)
 
+![C index comparison](results/figures/fig_native_heatmap.png)
+
+![Top featues selected by multiple tools](results/figures/fig_feature_heatmap.png)
+
 ## Run
 
 ```bash
